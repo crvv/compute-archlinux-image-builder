@@ -31,6 +31,8 @@ cleanup() {
 }
 trap cleanup EXIT
 
+pacman -S --needed --noconfirm arch-install-scripts e2fsprogs
+
 echo "- Creating an empty raw disk image."
 work_dir=$(mktemp --directory --tmpdir="$PWD" build-arch-gce.XXX)
 disk_raw=$work_dir/disk.raw
