@@ -170,6 +170,8 @@ arch-chroot -- "$mount_dir" /bin/bash -s -- "$loop_dev" <<-'EOS'
 		/^hosts:/ && sub(/\s*resolve \[!UNAVAIL=return\]/, "") { ++f }
 		{ print } END { assert(f == 1, "f == 1") }' /etc/nsswitch.conf
 
+    rm -v /var/cache/pacman/pkg/*
+
 EOS
 
 echo "- Cleaning up and finalizing the image."
