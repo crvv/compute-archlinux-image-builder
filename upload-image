@@ -1,0 +1,13 @@
+#!/bin/bash
+
+bucket=gce-images
+img=$(ls arch-v*.tar.gz | sort | tail -n 1)
+
+gsutil mb gs://$bucket
+gsutil cp $img gs://gce-images
+
+gcloud compute images create ${img%%.*} \
+    --source-uri=gs://$bucket/$img \
+    --guest-os-features=VIRTIO_SCSI_MULTIQUEUE
+
+gsutil rm gs://$bucket/$img
